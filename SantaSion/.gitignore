@@ -1,0 +1,17 @@
+# Ignorar archivos y carpetas generados por Visual Studio
+.vscode/
+.vs/
+bin/
+obj/
+
+# Ignorar archivos de configuración local
+*.suo
+*.user
+*.suo
+*.sln.docstates
+
+# Ignorar carpetas y archivos específicos
+node_modules/
+packages/
+*.log
+*.json
