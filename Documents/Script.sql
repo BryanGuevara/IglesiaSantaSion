@@ -97,6 +97,17 @@ CREATE TABLE Musicos (
     InstrumentoId uniqueidentifier NOT NULL 
 );
 
+CREATE TABLE Rol (
+	ID uniqueidentifier NOT NULL,
+	Nombre varchar(20)
+);
+
+CREATE TABLE RolMembresia (
+	ID uniqueidentifier NOT NULL,
+	RolId uniqueidentifier,
+	MenmbresiaId uniqueidentifier
+);
+
 -- Insertar la entrada para la Vigilia Nacional de Jóvenes en Cupinco
 INSERT INTO Eventos (ID, Titulo, Descripcion, FechaInicio, HoraInicio, FechaFin, HoraFin)
 VALUES (
@@ -167,6 +178,10 @@ INSERT INTO Instrumentos(ID, Nombre) VALUES (NEWID(), 'Teclado');
 INSERT INTO Instrumentos(ID, Nombre) VALUES (NEWID(), 'Bateria');
 INSERT INTO Instrumentos(ID, Nombre) VALUES (NEWID(), 'Güiro');
 INSERT INTO Instrumentos(ID, Nombre) VALUES (NEWID(), 'Guitarra');
+
+--Insertado de el primer valor de Rol
+INSERT INTO Rol(ID, Nombre) VALUES (NEWID(), 'Administrador');
+INSERT INTO Rol(ID, Nombre) VALUES (NEWID(), 'Miembro');
 
 --Sacando el ID de los eventos
 DECLARE @EventoCupinco uniqueidentifier;
@@ -259,6 +274,12 @@ SELECT @InstrumentoIdBateria = ID FROM Instrumentos WHERE Nombre = 'Bateria';
 SELECT @InstrumentoIdGuitarra = ID FROM Instrumentos WHERE Nombre = 'Guitarra';
 SELECT @InstrumentoIdGuiro = ID FROM Instrumentos WHERE Nombre = 'Güiro';
 
+-- Sacando el ID de los Roles
+Declare @RolAdmin uniqueidentifier;
+Declare @RolMiembro uniqueidentifier;
+SELECT @RolAdmin = ID FROM Rol WHERE Nombre = 'Administrador';
+SELECT @RolMiembro = ID FROM Rol WHERE Nombre = 'Miembro';
+
 --Insertado de quienes votaron
 	INSERT INTO Votos (ID, VotacionID, OpcionID, MembresiaID)
 VALUES
@@ -274,6 +295,7 @@ INSERT INTO Interesados (ID, EventoID, MembresiaID, FechaInteres)
 VALUES 
 	(NEWID(), @EventoCupinco, @MembresiaIdHnoBryan,'2023-11-04 19:00:00'),
 	(NEWID(), @EventoCupinco, @MembresiaIdHnoJaime,'2023-11-04 19:00:00');
+
 --Insertado de valores de los directivos
 INSERT INTO Directivos(ID, MembresiaId, DirectivasId,ComunidadId)
 VALUES 
@@ -326,6 +348,24 @@ VALUES
     (NEWID(), @MembresiaIdHnaPatty, @ComunidadIdNinos),
     (NEWID(), @MembresiaIdHnaAlba, @ComunidadIdNinos);
 
+-- Insertando valores en RolMembresia
+INSERT INTO RolMembresia(ID, MenmbresiaId, RolId)
+VALUES
+    (NEWID(), @MembresiaIdHnaJessica, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaAngela, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaBetty, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaClaudia, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaIrene, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaPatty, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaAlba, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaTita, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoJaime, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoBryan, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoJulio, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoVladimir, @RolMiembro),
+	(NEWID(), @MembresiaIdHnoJaime, @RolAdmin),
+	(NEWID(), @MembresiaIdHnoBryan, @RolAdmin)
+
 --para ver los valores desde SQL que inserto
 SELECT * FROM Eventos;
 SELECT * FROM Votaciones;
@@ -339,3 +379,5 @@ SELECT * FROM MembresiasComunidades;
 SELECT * FROM Directivos;
 SELECT * FROM Instrumentos;
 SELECT * FROM Musicos;
+SELECT * FROM Rol;
+SELECT * FROM RolMembresia;
