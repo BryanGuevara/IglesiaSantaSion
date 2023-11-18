@@ -1,21 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SantaSion.Models;
+using SantaSIon.Models;
 using System.Diagnostics;
 
-namespace SantaSion.Controllers
+namespace SantaSIon.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SantaSionContext _context; // Asegúrate de tener el contexto de la base de datos aquí.
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SantaSionContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            // Recuperar la lista de eventos que deseas mostrar en la página de inicio
+            var eventos = _context.Eventos.ToList();
+
+            foreach (var evento in eventos)
+            {
+                // Limpia los caracteres de nueva línea de la descripción
+                evento.Descripcion = evento.Descripcion?.Replace("\n", "").Replace("\r", "");
+            }
+            return View(eventos);
         }
 
         public IActionResult Privacy()

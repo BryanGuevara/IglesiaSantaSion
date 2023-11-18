@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SantaSion.Models;
+namespace SantaSIon.Models;
 
 public partial class Membresia
 {

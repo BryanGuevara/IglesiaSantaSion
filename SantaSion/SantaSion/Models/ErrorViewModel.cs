@@ -1,4 +1,4 @@
-namespace SantaSion.Models
+namespace SantaSIon.Models
 {
     public class ErrorViewModel
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SantaSion.Models;
+namespace SantaSIon.Models;
 
 public partial class Directiva
 {
-    public Guid? Id { get; set; }
+    public Guid Id { get; set; }
 
     public string? Nombre { get; set; }
 }

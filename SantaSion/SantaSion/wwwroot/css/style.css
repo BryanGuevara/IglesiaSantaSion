@@ -1,0 +1,39 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://us.123rf.com/450wm/iimages/iimages1204/iimages120401115/13131872-ilustraci%C3%B3n-de-una-textura-de-madera-detallada.jpg') fixed;
+    background-size: cover;
+}
+
+.center-box {
+    width: 60%;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.anuncio {
+    border: 1px solid #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+    .anuncio h2 {
+        color: #333;
+    }
+
+    .anuncio p {
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+        .anuncio p.event-dates,
+        .anuncio p.event-hours {
+            font-weight: bold;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }

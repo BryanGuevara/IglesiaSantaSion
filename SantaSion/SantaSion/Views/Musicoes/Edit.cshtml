@@ -1,0 +1,64 @@
+﻿@model SantaSIon.Models.Musico
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Musico</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="MembresiaId" class="control-label"></label>
+                @if (ViewBag.Membresias != null && ((IEnumerable<SelectListItem>)ViewBag.Membresias).Any())
+                {
+                    var membresiasList = new SelectList(ViewBag.Membresias, "Value", "Text");
+                    <select asp-for="MembresiaId" asp-items="membresiasList" class="form-control">
+                        <option value="">-- Select Membresia --</option>
+                    </select>
+                }
+                else
+                {
+                    <p>No hay membresías disponibles.</p>
+                }
+                <span asp-validation-for="MembresiaId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="InstrumentoId" class="control-label"></label>
+                @if (ViewBag.Instrumentos != null && ((IEnumerable<SelectListItem>)ViewBag.Instrumentos).Any())
+                {
+                    var instrumentosList = new SelectList(ViewBag.Instrumentos, "Value", "Text");
+                    <select asp-for="InstrumentoId" asp-items="instrumentosList" class="form-control">
+                        <option value="">-- Select Instrumento --</option>
+                    </select>
+                }
+                else
+                {
+                    <p>No hay instrumentos disponibles.</p>
+                }
+                <span asp-validation-for="InstrumentoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

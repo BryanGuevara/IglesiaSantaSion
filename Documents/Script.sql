@@ -1,15 +1,15 @@
 --Si necesita reiniciar la base de datos, descomente esto y corra el codigo
---USE master; DROP DATABASE SantaSion;
+--USE master; DROP DATABASE SantaSion; 
 
 -- Creación de la base de datos "SantaSion"
 CREATE DATABASE SantaSion;
-
+GO
 -- Cambio al uso de la base de datos recién creada
 USE SantaSion;
 
 -- Creación de la tabla "Anuncios" para guardar la informacion de las actividades
 CREATE TABLE Eventos (
-    ID uniqueidentifier PRIMARY KEY,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     Titulo varchar(50) NOT NULL,
     Descripcion text,
     FechaInicio date,
@@ -20,19 +20,19 @@ CREATE TABLE Eventos (
 
 -- Crear la tabla "Votaciones" para generar encuestas
 CREATE TABLE Votaciones (
-    ID uniqueidentifier PRIMARY KEY,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     Titulo varchar(50) NOT NULL,
     Descripcion text
 );
 
 -- Crear la tabla "Votaciones" para ver las opciones y cuantos votos tiene
 CREATE TABLE OpcionesVotacion (
-    ID uniqueidentifier PRIMARY KEY,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     VotacionID uniqueidentifier,
     Opcion varchar(50) NOT NULL
 );
 CREATE TABLE Votos (
-    ID uniqueidentifier PRIMARY KEY,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     VotacionID uniqueidentifier,
     OpcionID uniqueidentifier,
     MembresiaID uniqueidentifier
@@ -40,7 +40,7 @@ CREATE TABLE Votos (
 
 -- Crear la tabla "Interesados" para rastrear a las personas interesadas en un evento
 CREATE TABLE Interesados (
-    ID uniqueidentifier PRIMARY KEY,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     EventoID uniqueidentifier,
     MembresiaID uniqueidentifier,
     FechaInteres datetime
@@ -48,7 +48,7 @@ CREATE TABLE Interesados (
 
 -- Creación de la tabla "Membresias" para almacenar datos de los miembros
 CREATE TABLE Membresias (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     Nombres varchar(50) NOT NULL,
     Apellidos varchar(50) NOT NULL,
     ConocidoComo varchar(50) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE Membresias (
 
 -- Creación de la tabla "Comunidades" para almacenar datos de las comunidades a las que pueden pertenecer los miembros
 CREATE TABLE Comunidades (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     Nombre varchar(50) NOT NULL,
     Edadinicio varchar(7),
     EdadFin varchar(7)
@@ -65,20 +65,20 @@ CREATE TABLE Comunidades (
 
 -- Creación de la tabla "Directivas" para almacenar datos de las directivas de las comunidades
 CREATE TABLE Directivas(
-	ID uniqueidentifier,
+	ID uniqueidentifier PRIMARY KEY NOT NULL,
 	Nombre varchar(30)
 );
 
 -- Creación de la tabla "MembresiasComunidades" para relacionar miembros y comunidades
 CREATE TABLE MembresiasComunidades (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     MembresiaId uniqueidentifier,
     ComunidadId uniqueidentifier
 );
 
 -- Creación de la tabla "Directivos" para relacionar miembros, directivas y comunidades
 CREATE TABLE Directivos (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     MembresiaId uniqueidentifier,
     DirectivasId uniqueidentifier,
     ComunidadId uniqueidentifier
@@ -86,24 +86,26 @@ CREATE TABLE Directivos (
 
 -- Crear la tabla "Instrumentos" para almacenar información sobre los instrumentos disponibles
 CREATE TABLE Instrumentos (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     Nombre varchar(20) NOT NULL
 );
 
 -- Crear la tabla "Musicos" para almacenar información sobre los músicos
 CREATE TABLE Musicos (
-    ID uniqueidentifier NOT NULL,
+    ID uniqueidentifier PRIMARY KEY NOT NULL,
     MembresiaId uniqueidentifier NOT NULL,
     InstrumentoId uniqueidentifier NOT NULL 
 );
 
+-- Crear la tabla "Rol" para almacenar los Roles disponibles
 CREATE TABLE Rol (
-	ID uniqueidentifier NOT NULL,
+	ID uniqueidentifier PRIMARY KEY NOT NULL,
 	Nombre varchar(20)
 );
 
+-- Crear la tabla "RolMembresia" para conectar los miembros con los roles
 CREATE TABLE RolMembresia (
-	ID uniqueidentifier NOT NULL,
+	ID uniqueidentifier PRIMARY KEY NOT NULL,
 	RolId uniqueidentifier,
 	MenmbresiaId uniqueidentifier
 );
@@ -349,22 +351,29 @@ VALUES
     (NEWID(), @MembresiaIdHnaAlba, @ComunidadIdNinos);
 
 -- Insertando valores en RolMembresia
-INSERT INTO RolMembresia(ID, MenmbresiaId, RolId)
+-- Insertar valores en RolMembresia con RolMiembro para cada Membresia
+INSERT INTO RolMembresia (ID, MenmbresiaId, RolId)
 VALUES
+    (NEWID(), @MembresiaIdHnoJaime, @RolAdmin),
+    (NEWID(), @MembresiaIdHnoBryan, @RolAdmin),
+    (NEWID(), @MembresiaIdHnoJulio, @RolMiembro),
     (NEWID(), @MembresiaIdHnaJessica, @RolMiembro),
     (NEWID(), @MembresiaIdHnaAngela, @RolMiembro),
     (NEWID(), @MembresiaIdHnaBetty, @RolMiembro),
     (NEWID(), @MembresiaIdHnaClaudia, @RolMiembro),
     (NEWID(), @MembresiaIdHnaIrene, @RolMiembro),
     (NEWID(), @MembresiaIdHnaPatty, @RolMiembro),
-    (NEWID(), @MembresiaIdHnaAlba, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaYanira, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaFrancisca, @RolMiembro),
     (NEWID(), @MembresiaIdHnaTita, @RolMiembro),
-    (NEWID(), @MembresiaIdHnoJaime, @RolMiembro),
-    (NEWID(), @MembresiaIdHnoBryan, @RolMiembro),
-    (NEWID(), @MembresiaIdHnoJulio, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaNuria, @RolMiembro),
     (NEWID(), @MembresiaIdHnoVladimir, @RolMiembro),
-	(NEWID(), @MembresiaIdHnoJaime, @RolAdmin),
-	(NEWID(), @MembresiaIdHnoBryan, @RolAdmin)
+    (NEWID(), @MembresiaIdMamitaNoy, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaRosa, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoJairo, @RolMiembro),
+    (NEWID(), @MembresiaIdHnoDavid, @RolMiembro),
+    (NEWID(), @MembresiaIdHnaAlba, @RolMiembro);
+
 
 --para ver los valores desde SQL que inserto
 SELECT * FROM Eventos;
