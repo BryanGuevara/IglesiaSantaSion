@@ -1,0 +1,68 @@
+﻿@model SantaSIon.Models.PerfilViewModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Perfil de Miembro</title>
+</head>
+<body>
+
+    <h1>Seleccionar Miembro:</h1>
+
+    <form asp-action="Perfiles" method="post">
+        <select asp-for="Membresia.Id" asp-items="@(new SelectList(Model.Membresias, "Id", "Nombres"))">
+            <option value="">Seleccionar Miembro</option>
+        </select>
+        <button type="submit">Mostrar Información</button>
+    </form>
+
+    @if (Model.Membresia != null)
+    {
+        <div>
+            <h2>@Model.Membresia.Nombres @Model.Membresia.Apellidos</h2>
+            <p>Conocido como: @Model.Membresia.ConocidoComo</p>
+            <p>Fecha de Nacimiento: @Model.Membresia.FechaNacimiento.ToShortDateString()</p>
+
+            <h3>Roles:</h3>
+            <ul>
+                @foreach (var rol in Model.Roles)
+                {
+                    <li>@rol.Nombre</li>
+                }
+            </ul>
+
+            <h3>Comunidades:</h3>
+            <ul>
+                @foreach (var comunidad in Model.Comunidades)
+                {
+                    <li>@comunidad.Nombre</li>
+                }
+            </ul>
+
+            @if (Model.Musicos.Any())
+            {
+                <h3>Musicos:</h3>
+                <ul>
+                    @foreach (var musico in Model.Musicos)
+                    {
+                        <li>@musico.Instrumento.Nombre</li>
+                    }
+                </ul>
+            }
+
+            @if (Model.Directivos.Any())
+            {
+                <h3>Directivos:</h3>
+                <ul>
+                    @foreach (var directivo in Model.Directivos)
+                    {
+                        <li>@directivo.Directiva.Nombre</li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+
+</body>
+</html>

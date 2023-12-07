@@ -1,0 +1,54 @@
+﻿@model List<SantaSIon.Models.Evento>
+
+@{
+    ViewData["Title"] = "Iglesia Santa Sion";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+
+    <div class="center-box">
+        <div class="tablon-anuncios">
+            @if (Model != null)
+            {
+                @foreach (var evento in Model)
+                {
+                    <div class="anuncio">
+                        <h2>@evento.Titulo</h2>
+                        @if (!string.IsNullOrEmpty(evento.Descripcion))
+                        {
+                            <p>@Html.Raw(evento.Descripcion.Replace("\n", "<br>").Replace("\r", "<br>"))</p>
+                        }
+                        <p class="event-dates">
+                            Fecha: @evento.FechaInicio?.ToShortDateString() @if (evento.FechaFin.HasValue && evento.FechaInicio != evento.FechaFin)
+                            {
+                                <text>- @evento.FechaFin?.ToShortDateString()</text>
+                                ;
+                            }
+                        </p>
+
+
+                        <p class="event-hours">
+                            Horario: @evento.HoraInicio - @evento.HoraFin
+                        </p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Estamos libres de eventos durante un tiempo <br> Esta atento por si hay eventos para los proximos dias </p>
+            }
+        </div>
+    </div>
+
+
+</body>
+</html>
